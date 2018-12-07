@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  api:
+    build: ./api
+    volumes:
+      - ./api:/go/src/api
+    ports:
+      - 3000:3000
+    tty: true
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    image: mysql:8.0.13
+    volumes:
+      - ./db/mysql/volumes:/var/lib/mysql
+    ports:
+      - 3306:3306
+    tty: true
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
