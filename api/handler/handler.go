@@ -4,7 +4,10 @@ import (
 	"net/http"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	"api/db"
+	"api/models"
+
+	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 )
 
@@ -19,11 +22,15 @@ func Login() echo.HandlerFunc {
 		username := c.FormValue("username")
 		password := c.FormValue("password")
 
-		if username == "test" && password == "test" {
+		db := db.ConnectGORM()
+		user := []models.User{}
+		db.Find(&user, "name=? and password=?", username, password)
+
+		if len(user) > 0 && username == user[0].Name {
 			token := jwt.New(jwt.SigningMethodHS256)
 
 			claims := token.Claims.(jwt.MapClaims)
-			claims["name"] = "test"
+			claims["name"] = username
 			claims["admimn"] = true
 			claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
