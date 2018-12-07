@@ -1,10 +1,13 @@
 package handler
 
 import (
+	"bytes"
+	"log"
 	"net/http"
 	"time"
 
 	"api/db"
+	"api/graphql"
 	"api/models"
 
 	"github.com/dgrijalva/jwt-go"
@@ -49,9 +52,13 @@ func Login() echo.HandlerFunc {
 func Restricted() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		user := c.Get("user").(*jwt.Token)
-		claims := user.Claims.(jwt.MapClaims)
-		name := claims["name"].(string)
+		_ = user.Claims.(jwt.MapClaims)
+		bufBody := new(bytes.Buffer)
+		bufBody.ReadFrom(c.Request().Body)
+		query := bufBody.String()
+		log.Printf(query)
+		result := graphql.ExecuteQuery(query)
 
-		return c.String(http.StatusOK, "Hi "+name)
+		return c.JSON(http.StatusOK, result)
 	}
 }

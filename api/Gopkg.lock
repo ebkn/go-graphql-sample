@@ -18,6 +18,26 @@
   version = "v1.4.1"
 
 [[projects]]
+  digest = "1:b1b6d04c3d4288719efc24ae4e52d24808530f5d28b1a9e4897ea5ad047b6124"
+  name = "github.com/graphql-go/graphql"
+  packages = [
+    ".",
+    "gqlerrors",
+    "language/ast",
+    "language/kinds",
+    "language/lexer",
+    "language/location",
+    "language/parser",
+    "language/printer",
+    "language/source",
+    "language/typeInfo",
+    "language/visitor",
+  ]
+  pruneopts = "UT"
+  revision = "08943645bf265d192b32f2100cdff2428f7ae7c5"
+  version = "v0.7.7"
+
+[[projects]]
   digest = "1:d4e6e8584d0a94ce567d237e19192dae44d57d2767ac7e1d7fbf5626d176381a"
   name = "github.com/jinzhu/gorm"
   packages = ["."]
@@ -122,6 +142,7 @@
   input-imports = [
     "github.com/dgrijalva/jwt-go",
     "github.com/go-sql-driver/mysql",
+    "github.com/graphql-go/graphql",
     "github.com/jinzhu/gorm",
     "github.com/labstack/echo",
     "github.com/labstack/echo/middleware",
